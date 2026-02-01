@@ -1,13 +1,14 @@
 <!DOCTYPE html>
-<html>
+<html lang="th">
 <head>
     <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Share Flex Message Ready</title>
     <script src="https://static.line-scdn.net/liff/edge/2/sdk.js"></script>
     <style>
         body {
             margin: 0;
-            font-family: sans-serif;
+            font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
             display: flex;
             align-items: center;
             justify-content: center;
@@ -16,174 +17,172 @@
         }
         .msg {
             display: none;
-            padding: 20px 30px;
+            padding: 25px 35px;
             background: white;
-            border-radius: 16px;
-            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+            border-radius: 20px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.08);
             font-size: 18px;
             text-align: center;
             color: #333;
+            max-width: 80%;
         }
-        #errorMsg { 
-            color: #d9534f;
-            word-break: break-word;
-            max-width: 80vw;
-        }
+        #loadingMsg { color: #5a67d8; }
+        #successMsg { color: #2f855a; }
+        #errorMsg { color: #c53030; word-break: break-word; }
     </style>
 </head>
 <body>
-    <div class="msg" id="loadingMsg">โณ เธเธณเธฅเธฑเธเน€เธฃเธดเนเธกเธ•เนเธ LIFF เนเธฅเธฐเน€เธ•เธฃเธตเธขเธกเธเธฒเธฃเนเธเธฃเน...</div>
-    <div class="msg" id="successMsg">โ… เนเธเธฃเนเนเธซเนเน€เธเธทเนเธญเธ เน เธชเธณเน€เธฃเนเธเนเธฅเนเธง</div>
-    <div class="msg" id="errorMsg">โ เน€เธเธดเธ”เธเนเธญเธเธดเธ”เธเธฅเธฒเธ”เนเธเธเธฒเธฃเนเธเธฃเน</div> 
+    <div class="msg" id="loadingMsg">⏳ กำลังเริ่มต้นและเตรียมการแชร์...</div>
+    <div class="msg" id="successMsg">✅ แชร์ให้เพื่อน ๆ สำเร็จแล้ว</div>
+    <div class="msg" id="errorMsg">❌ เกิดข้อผิดพลาดในการแชร์</div> 
 
     <script>
-        // เนเธเธฃเธเธชเธฃเนเธฒเธ Flex Message เธ—เธตเนเนเธเนเนเธเธเธตเธเธเธฒเนเธซเนเธ–เธนเธเธ•เนเธญเธ
-        const flexMessage = {
+        // โครงสร้าง Flex Message ที่ถูกต้องตาม LINE API
+        const flexMessageData = {
             type: "flex",
-            altText: "๐“ เนเธเธฐเธเธณเธซเธเธฑเธเธชเธทเธญเธเนเธฒเธญเนเธฒเธ เนเธ”เธข เธเธ•เธ—.เธเธฑเนเธเธเธตเธ—เธตเน 2",
+            altText: "📚 แนะนำหนังสือน่าอ่าน โดย นตท.ชั้นปีที่ 2",
             contents: {
-                "type": "carousel",
-                "contents": [
+                type: "carousel",
+                contents: [
                     {
-                        "type": "bubble",
-                        "body": {
-                            "type": "box",
-                            "layout": "vertical",
-                            "contents": [
+                        type: "bubble",
+                        body: {
+                            type: "box",
+                            layout: "vertical",
+                            paddingAll: "none",
+                            contents: [
                                 {
-                                    "type": "image",
-                                    "url": "https://img2.pic.in.th/1000003295.png",
-                                    "size": "full",
-                                    "animated": true,
-                                    "aspectMode": "cover",
-                                    "aspectRatio": "2.3:3"
+                                    type: "image",
+                                    url: "https://img2.pic.in.th/1000003295.png",
+                                    size: "full",
+                                    aspectMode: "cover",
+                                    aspectRatio: "2.3:3",
+                                    animated: true
                                 },
                                 {
-                                    "type": "button",
-                                    "action": {
-                                        "type": "uri",
-                                        "uri": "https://liff.line.me/2009026267-QpGFMX8m",
-                                        "label": "เนเธเธฃเนเธ•เนเธญเธเธญเธเน€เธเธทเนเธญเธ"
+                                    type: "button",
+                                    action: {
+                                        type: "uri",
+                                        uri: "https://liff.line.me/2009026267-QpGFMX8m",
+                                        label: "แชร์ต่อบอกเพื่อน"
                                     },
-                                    "position": "absolute",
-                                    "offsetTop": "82%",
-                                    "offsetEnd": "18%",
-                                    "offsetStart": "15%"
-                                }
-                            ],
-                            "paddingAll": "none"
-                        }
-                    },
-                    {
-                        "type": "bubble",
-                        "hero": {
-                            "type": "image",
-                            "url": "https://img2.pic.in.th/1000003190.jpg",
-                            "size": "full",
-                            "aspectMode": "fit",
-                            "aspectRatio": "2.9:3",
-                            "animated": true,
-                            "action": {
-                                "type": "uri",
-                                "label": "action",
-                                "uri": "https://www.youtube.com/shorts/MLB5dPBmMHY"
-                            }
-                        },
-                        "body": {
-                            "type": "box",
-                            "layout": "vertical",
-                            "backgroundColor": "#9370DB",
-                            "contents": [
-                                {
-                                    "type": "text",
-                                    "text": "เธเธทเนเธญเธซเธเธฑเธเธชเธทเธญ เน€เธเนเธเธเธฑเธเธเธถเนเธเธ เธนเน€เธเธฒ",
-                                    "weight": "bold",
-                                    "size": "md",
-                                    "color": "#4A148C",
-                                    "wrap": true
-                                },
-                                {
-                                    "type": "text",
-                                    "text": "เนเธเธฐเธเธณเนเธ”เธข : เธเนเธฒเธกเธเธน",
-                                    "size": "sm",
-                                    "color": "#6A1B9A",
-                                    "wrap": true
+                                    position: "absolute",
+                                    offsetTop: "82%",
+                                    offsetEnd: "18%",
+                                    offsetStart: "15%",
+                                    style: "primary",
+                                    color: "#9370DB"
                                 }
                             ]
                         }
                     },
                     {
-                        "type": "bubble",
-                        "hero": {
-                            "type": "image",
-                            "url": "https://img5.pic.in.th/file/secure-sv1/1000003196573672507fd600cc.jpg",
-                            "size": "full",
-                            "aspectMode": "cover",
-                            "aspectRatio": "2.9:3",
-                            "animated": true,
-                            "action": {
-                                "type": "uri",
-                                "label": "action",
-                                "uri": "https://youtube.com/shorts/db-V38YRbdQ?si=zKbWUd_Ey-fYasmU"
+                        type: "bubble",
+                        hero: {
+                            type: "image",
+                            url: "https://img2.pic.in.th/1000003190.jpg",
+                            size: "full",
+                            aspectMode: "fit",
+                            aspectRatio: "2.9:3",
+                            action: {
+                                type: "uri",
+                                label: "action",
+                                uri: "https://www.youtube.com/shorts/MLB5dPBmMHY"
                             }
                         },
-                        "body": {
-                            "type": "box",
-                            "layout": "vertical",
-                            "backgroundColor": "#9370DB",
-                            "contents": [
+                        body: {
+                            type: "box",
+                            layout: "vertical",
+                            backgroundColor: "#9370DB",
+                            contents: [
                                 {
-                                    "type": "text",
-                                    "text": "เธเธนเนเธกเธทเธญเธเธงเธเธเธธเธกเธญเธฒเธฃเธกเธ“เนเธเธ",
-                                    "weight": "bold",
-                                    "size": "md",
-                                    "color": "#4A148C",
-                                    "wrap": true
+                                    type: "text",
+                                    text: "ชื่อหนังสือ เข็นฝันขึ้นภูเขา",
+                                    weight: "bold",
+                                    size: "md",
+                                    color: "#ffffff",
+                                    wrap: true
                                 },
                                 {
-                                    "type": "text",
-                                    "text": "เนเธเธฐเธเธณเนเธ”เธข : เน€เธ",
-                                    "size": "sm",
-                                    "color": "#6A1B9A",
-                                    "wrap": true
+                                    type: "text",
+                                    text: "แนะนำโดย : ก้ามปู",
+                                    size: "sm",
+                                    color: "#eeeeee",
+                                    wrap: true
                                 }
                             ]
                         }
                     },
                     {
-                        "type": "bubble",
-                        "hero": {
-                            "type": "image",
-                            "url": "https://img5.pic.in.th/file/secure-sv1/1000003195cdaf59f043019b7a.jpg",
-                            "size": "full",
-                            "aspectMode": "cover",
-                            "aspectRatio": "2.9:3",
-                            "animated": true,
-                            "action": {
-                                "type": "uri",
-                                "label": "action",
-                                "uri": "https://www.youtube.com/shorts/CHBVvNKHv4I?si=G2biKUofAnEqILup"
+                        type: "bubble",
+                        hero: {
+                            type: "image",
+                            url: "https://img5.pic.in.th/file/secure-sv1/1000003196573672507fd600cc.jpg",
+                            size: "full",
+                            aspectMode: "cover",
+                            aspectRatio: "2.9:3",
+                            action: {
+                                type: "uri",
+                                label: "action",
+                                uri: "https://youtube.com/shorts/db-V38YRbdQ?si=zKbWUd_Ey-fYasmU"
                             }
                         },
-                        "body": {
-                            "type": "box",
-                            "layout": "vertical",
-                            "backgroundColor": "#9370DB",
-                            "contents": [
+                        body: {
+                            type: "box",
+                            layout: "vertical",
+                            backgroundColor: "#9370DB",
+                            contents: [
                                 {
-                                    "type": "text",
-                                    "text": "เน€เธเธฅเธตเนเธขเธเธ•เธฑเธงเน€เธญเธเนเธซเธกเนเนเธกเนเธขเธฒเธ",
-                                    "weight": "bold",
-                                    "size": "md",
-                                    "color": "#4A148C",
-                                    "wrap": true
+                                    type: "text",
+                                    text: "คู่มือควบคุมอารมณ์คน",
+                                    weight: "bold",
+                                    size: "md",
+                                    color: "#ffffff",
+                                    wrap: true
                                 },
                                 {
-                                    "type": "text",
-                                    "text": "เนเธเธฐเธเธณเนเธ”เธข : เธเธดเธ",
-                                    "size": "sm",
-                                    "color": "#6A1B9A",
-                                    "wrap": true
+                                    type: "text",
+                                    text: "แนะนำโดย : เจ",
+                                    size: "sm",
+                                    color: "#eeeeee",
+                                    wrap: true
+                                }
+                            ]
+                        }
+                    },
+                    {
+                        type: "bubble",
+                        hero: {
+                            type: "image",
+                            url: "https://img5.pic.in.th/file/secure-sv1/1000003195cdaf59f043019b7a.jpg",
+                            size: "full",
+                            aspectMode: "cover",
+                            aspectRatio: "2.9:3",
+                            action: {
+                                type: "uri",
+                                label: "action",
+                                uri: "https://www.youtube.com/shorts/CHBVvNKHv4I?si=G2biKUofAnEqILup"
+                            }
+                        },
+                        body: {
+                            type: "box",
+                            layout: "vertical",
+                            backgroundColor: "#9370DB",
+                            contents: [
+                                {
+                                    type: "text",
+                                    text: "เปลี่ยนตัวเองใหม่ไม่ยาก",
+                                    weight: "bold",
+                                    size: "md",
+                                    color: "#ffffff",
+                                    wrap: true
+                                },
+                                {
+                                    type: "text",
+                                    text: "แนะนำโดย : นิก",
+                                    size: "sm",
+                                    color: "#eeeeee",
+                                    wrap: true
                                 }
                             ]
                         }
@@ -194,48 +193,52 @@
 
         function displayMessage(id) {
             document.querySelectorAll('.msg').forEach(el => el.style.display = 'none');
-            document.getElementById(id).style.display = 'block';
+            const target = document.getElementById(id);
+            if(target) target.style.display = 'block';
         }
 
         async function main() {
             displayMessage('loadingMsg');
             
             try {
-                // เธ•เธฃเธงเธเธชเธญเธ LIFF ID เนเธซเนเธ•เธฃเธเธเธฑเธเธ—เธตเนเธ•เธฑเนเธเธเนเธฒเนเธ LINE Developers Console
+                // เริ่มต้น LIFF
                 await liff.init({ liffId: "2009026267-QpGFMX8m" });  
 
+                // เช็คการ Login
                 if (!liff.isLoggedIn()) {
                     liff.login();
                     return;
                 }
                 
+                // ตรวจสอบว่าเปิดใน LINE หรือไม่ (ShareTargetPicker ใช้ได้เฉพาะใน LINE)
                 if (!liff.isApiAvailable("shareTargetPicker")) {
-                    throw new Error("API shareTargetPicker เนเธกเนเธฃเธญเธเธฃเธฑเธ (เนเธเธฃเธ”เน€เธเธดเธ”เนเธเนเธญเธ LINE)");
+                    alert("กรุณาเปิดลิงก์นี้ผ่านแอปพลิเคชัน LINE เท่านั้น");
+                    return;
                 }
 
-                document.getElementById("loadingMsg").style.display = "none";
-
-                // เธชเนเธ Flex Message
-                const result = await liff.shareTargetPicker([flexMessage]);
+                // สั่งเปิด Share Target Picker ทันที
+                const result = await liff.shareTargetPicker([flexMessageData]);
                 
                 if (result) {
+                    // ถ้าแชร์สำเร็จ
                     displayMessage('successMsg');
                     setTimeout(() => liff.closeWindow(), 2000);
                 } else {
-                    // เธเธฃเธ“เธตเธเธนเนเนเธเนเธขเธเน€เธฅเธดเธเธเธฒเธฃเนเธเธฃเน
+                    // ถ้ากดปิดหน้าจอแชร์ หรือยกเลิก
                     liff.closeWindow();
                 }
 
             } catch (err) {
-                console.error("Share Error:", err);
+                console.error("LIFF Error:", err);
                 const errorMsgElement = document.getElementById('errorMsg');
-                errorMsgElement.innerHTML = `โ เน€เธเธดเธ”เธเนเธญเธเธดเธ”เธเธฅเธฒเธ”เนเธเธเธฒเธฃเนเธเธฃเน: <br> ${err.message || 'เนเธกเนเธ—เธฃเธฒเธเธชเธฒเน€เธซเธ•เธธ'}`;
-                displayMessage('errorMsg'); 
-                // เนเธกเนเธเธงเธฃเธเธดเธ”เธซเธเนเธฒเธ•เนเธฒเธเธ—เธฑเธเธ—เธตเน€เธเธทเนเธญเนเธซเนเธเธนเนเธญเนเธฒเธเน€เธซเนเธ Error
+                errorMsgElement.innerHTML = `❌ เกิดข้อผิดพลาด: <br><small>${err.message}</small>`;
+                displayMessage('errorMsg');
+                // ไม่ปิดหน้าต่างทันทีเพื่อให้ผู้ใช้เห็นข้อผิดพลาด
                 setTimeout(() => liff.closeWindow(), 5000); 
             }
         }
 
+        // เรียกใช้งาน function main
         main();
     </script>
 </body>
